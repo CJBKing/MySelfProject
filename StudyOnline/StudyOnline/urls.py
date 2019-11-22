@@ -15,15 +15,13 @@ Including another URLconf
 """
 
 
-# from django.conf.urls import url,include
-# from django.contrib import admin
+from django.conf.urls import url,include
+from django.contrib import admin
 import xadmin
-from django.urls import path
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    # url(r'^xadmin/', xadmin.site.urls),
-    # url(r'^admin/',include(admin.site.urls)),
-    path('xadmin/',xadmin.site.urls),
-    path('',TemplateView.as_view(template_name='index.html'),name='index')
+    url(r'^admin/',include(admin.site.urls)),
+    url(r'^xadmin/', xadmin.site.urls),
+    url(r'^index/',TemplateView.as_view(template_name='index.html'),name='index')
 ]
