@@ -15,6 +15,7 @@ import sys             #新加的包，为了能找到apps下面的应用
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
+sys.path.insert(0,os.path.join(BASE_DIR,'extra_apps'))
  #插入第0是希望它先搜索我们app下东西：
 #以免在cmd下使用python manage.py makemigrations报错
 
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
     'course',
     'organization',
     'operation',
+    'xadmin',
+    'crispy_forms',
 ]
 
 AUTH_USER_MODEL='users.UserProfile'
@@ -131,3 +134,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS=(
+    os.path.join(BASE_DIR,'static'),
+    )
