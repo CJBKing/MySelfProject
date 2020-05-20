@@ -1,0 +1,59 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>{% block title %}博客{% endblock %}</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/index_style.css' %}">
+{% block css %}
+{% endblock %}
+</head>
+<body>
+
+    {% include 'header.html' %}
+    
+    {% block container %}
+    <div class="container">
+    	 <!-- 左边竖栏 -->
+   	 <div class="container-leftcolumn">
+        {% block container-leftcolumn %}
+          {% endblock %}
+    </div> <!-- 左边竖栏结束 -->
+
+
+  
+    <div class="container-middlecolumn">
+          {% block container-middlecolumn %}
+          {% endblock %}
+    </div>
+    <!-- 中间竖栏结束 -->
+   
+
+    
+     <div class="container-rightcolumn">
+         {% block container-rightcolumn %}
+          {% endblock %}
+        <div id="back-to-top">
+            <i class="glyphicon glyphicon-arrow-up">顶部</i>
+         </div>
+     </div><!-- 右边竖栏结束 -->
+        
+
+    </div>
+    {% endblock %}
+
+    
+    {% block LoginandRegister %}
+    {% endblock %}
+
+    <script src="{% static 'jquery/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'popper/popper.js' %}"></script>    
+    <!-- 引入bootstrap的js文件 -->
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+</body>
+</html>

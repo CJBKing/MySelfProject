@@ -1,0 +1,174 @@
+{% load blog_tags %}
+{% load user_tags %}
+{% load staticfiles %}
+	<!-- 个人信息栏 -->
+    	<div class="personal-info">
+    		<div class="toparea">
+    			<a href="index.html">
+    				<ul>
+    				<li>
+    					{% if request.user.is_authenticated %}
+    					<img class="img-circle" src="{{ request.user.image }}">
+    					{% else %}
+    					<img class="img-circle" src="{% static 'images/default_head_img.gif' %}">
+    					{% endif %}
+    				</li>
+    				<li style="text-align: left;width:60%;margin-top: 6px;"><b>{{ request.user.nick_name }}</b></li>
+    				<li style="text-align: left;width:60%;color: rgb(19,197,248);font-size: 15px;"><b>个人主页></b></li>
+    				</ul>
+    			</a>
+    		</div>
+    		<div class="personalsign">
+    			<ul>
+    				<li class="signinfo">博主是一个爱捣鼓，爱钻研爱学习的码农，梦想是采菊东篱下，悠然见南山</li>
+    			</ul>
+    		</div>
+    		<div class="middlearea">
+    			<!-- 文章，粉丝，访问量相关信息 -->
+    			<div class="ulinfo">
+						<dl id="middlearea-article">
+							<a href=""><dt>文章</dt><dd>{% get_total_entrycount %}</dd></a>
+						</dl>
+						<dl id="middlearea-fensi">
+							<dt>粉丝</dt><dd>0</dd>
+						</dl>
+						<dl id="middlearea-pinglun">
+							<dt>评论</dt><dd>0</dd>
+						</dl>
+						<dl id="middlearea-visit">
+							<dt>访问</dt><dd>0</dd>
+						</dl>
+						<dl id="middlearea-zan">
+							<dt>获赞</dt><dd>0</dd>
+						</dl>
+    			</div>
+
+    			<!-- 社交联系信息 -->
+    			<div class="relation">
+    				<dl id="qq">
+    					<a href="http://shang.qq.com/wpa/qunwpa?idkey=77fbfb6138ce6e26e4289d15725e5df9d66bf298d17e881f2abd777334505255" target="_blank">
+    						<dt><img class="imgSvg" src="{% static 'images/qq.svg' %}"></dt>
+    						<dd>QQ群</dd>
+    					</a>
+    				</dl>
+    				<dl id="github">
+    					<a href="">
+    						<dt><img class="imgSvg" src="{% static 'images/githubsvg.svg' %}"></dt>
+    						<dd>github</dd>
+    					</a>
+    				</dl>
+    				<dl id="gongzhonghao">
+    					<a href="">
+    						<dt><img class="imgSvg" src="{% static 'images/weixin.svg' %}"></dt>
+    						<dd>公众号</dd>
+    					</a>
+    				</dl>
+    			</div>
+    		</div>
+            <div class="bottom-guanzhu">
+                <div class="guanzhu-item">
+                    <ul>
+                        <li class="guanzhu-li"><button name="btnGuanzhu">关注</button></li>
+                        <li class="sendmsg-li"><button name="btnSendMessage">私信</button></li>
+                    </ul>
+                </div>
+            </div>
+    	</div>
+    	<!-- 个人信息结束 -->
+
+
+<!-- 最新文章 -->
+<div class="asideArchive">
+			<h3 class="aside-title">最新文章</h3>
+			{% get_recent_entries as recent_entry_list %}
+		<div class="aside-content">
+			<div class="lately-article">
+				{% for entry in recent_entry_list %}
+				<dl>
+					<a href="{{ entry.get_absolute_url }}">
+						<dt>{{ entry.title }}</dt> 
+						<dd>{{ entry.created_time|date:"Y年m月d日" }}</dd> 
+					</a>
+				</dl>
+				{% endfor %}
+			</div>
+		</div>
+</div>
+
+	<!-- 分类 -->
+<div class="asideArchive">
+	<h3 class="aside-title">分类</h3>
+    {% get_categories as category_list %}
+	<div class="aside-content">
+		<ul class="archive-list">
+			{% for category in category_list %}
+			<li>
+				<a href="{% url 'blog:blog_category' category.id %}">{{ category.name }}
+					<span class="count-float-right">{% get_entry_count_of_category category.name %}篇</span>
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<p class="text-center">
+		<a href="">展开</a>
+	</p>
+</div>
+
+<!-- 归档 -->
+<div class="asideArchive">
+	<h3 class="aside-title">归档</h3>
+	{% archives as date_list %}
+	<div class="aside-content">
+		<ul class="archive-list">
+			{% for date in date_list %}
+			<li>
+				<a href="{% url 'blog:blog_archives' date.year date.month %}">{{ date.year }}年{{ date.month }}月
+					<span class="count-float-right">{% get_entry_count_of_date date.year date.month %}篇</span>
+				</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<p class="text-center">
+		<a href="">展开</a>
+	</p>
+</div>
+
+<!-- 热门文章 -->
+<div class="asideArchive">
+			<h3 class="aside-title">热门文章</h3>
+			{% get_popular_entries as popular_entry_list %}
+		<div class="aside-content">
+			<div class="lately-article">
+				{% for entry in popular_entry_list %}
+				<dl style="border: none;">
+					<a href="{{ entry.get_absolute_url }}">
+						<dt>{{ entry.title }}</dt> 
+						<dd>阅读数：{{ entry.visiting }}</dd> 
+					</a>
+				</dl>
+				{% endfor %}
+			</div>
+		</div>
+</div>
+
+<!-- 标签 -->
+<div class="asideArchive">
+	<h3 class="aside-title">标签云:</h3>
+	{% get_tags as tag_list %}
+	<div class="aside-content">
+		<ul class="archive-list">
+			{% for tag in tag_list %}
+			<li style="border: 1px solid #aaa;background-color:#fff;border-radius: 3px; display: inline-block;margin-right: 3px;
+			-webkit-margin-after:1em;padding:2px;">
+				<a href="{% url 'blog:blog_tag' tag.id %}">{{ tag.name }}</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+
+{% block toc %}
+{% endblock %}

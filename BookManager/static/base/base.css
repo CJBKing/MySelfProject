@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding:0;
+}
+.Nav
+{
+	background-color: #292929;
+	overflow: hidden;
+	height: 65px;
+}
+.Nav li
+{
+	float: left;
+	list-style-type: none;
+	margin:0 20px;
+}
+.Nav li a
+{
+	color: #fff;
+	text-decoration: none;
+	line-height: 65px;
+}
+.Nav li a:hover
+{
+	color: 	#436EEE;
+}

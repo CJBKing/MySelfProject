@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>{% block title %}base{% endblock %}</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+{% block styleCss %}
+
+{% endblock %}
+</head>
+<body>
+
+		<div class="infoArea">
+			<img src="/static/images/art.gif">
+			<div class="DialogBox">
+			 {% block login %}
+			 {% endblock %}
+			</div>
+		</div>
+	<div id="footer">
+			版权 © jinbo.com
+	</div>
+</body>
+</html>

@@ -20,8 +20,20 @@ from django.contrib import admin
 import xadmin
 from django.views.generic import TemplateView
 
+from users.views import LoginView
+from users.views import RegisterView,ActiveUserView,ForgetPwdView,ResetPwdView,ModifyPwdView
+from organization.views import OrgView
+
 urlpatterns = [
     url(r'^admin/',include(admin.site.urls)),
     url(r'^xadmin/', xadmin.site.urls),
-    url(r'^index/',TemplateView.as_view(template_name='index.html'),name='index')
+    url(r'^index/',TemplateView.as_view(template_name='index.html')),
+    url(r'^login/',LoginView.as_view(),name='login'),
+    url(r'^register/',RegisterView.as_view(),name='register'),
+    url(r'^captcha/',include('captcha.urls')),
+    url(r'^active/(?P<active_code>.*)/',ActiveUserView.as_view(),name='user_active'),
+    url(r'^forgetpwd/',ForgetPwdView.as_view(),name='forgetpwd'),
+    url(r'^reset/(?P<active_code>.*)/',ResetPwdView.as_view(),name="resetPwd"),
+    url(r'^modify_pwd/',ModifyPwdView.as_view(),name="modify_pwd"),
+    url(r'^org_list/',OrgView.as_view(),name="org_list"),
 ]

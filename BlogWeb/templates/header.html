@@ -1,0 +1,73 @@
+{% load staticfiles %}
+
+
+    <div class="header">
+    	<!-- 顶部 -->
+    <div class="top">
+    	<!-- 左边部分 -->
+    	<div class="top-left">
+    		<!-- logo部分 -->
+    		<div class="logo">
+    			<a href="/index">
+    				<img src="{% static 'images/logo3.gif' %}">
+    			</a>
+    		</div>
+    		<!-- 滚动消息 -->
+    		<div class="web-xiaoxi">
+    			<i class="el-speaker">
+    			</i>
+    			<ul class="mulitline">
+    				test
+    			</ul>
+    		</div>
+    	</div>
+    	<!-- 右边部分 -->
+    	<div class="top-right">
+    		<ul class="orange-text">
+    			<li>
+    				<a href="{% url 'blog:blog_index' %}" class="active">首页</a>
+    			</li>
+    			<li>
+    				<a href="/">分类</a>
+    			</li>
+    		</ul>
+             <form class="top-right-form" action="{% url 'blog:blog_search' %}">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search" name="keyword">
+                  <button type="submit" class="btn btn-default">搜索</button>
+                </div>
+             </form>
+    	</div>
+
+    	<!-- 头像 -->
+    	<div class="vip">
+            {% block LoginHead %}
+            {% if request.user.is_authenticated %}  <!-- 如果登录成功 -->
+            <a onclick="btnLoginAndRegisterClicked()">
+                    <ul>
+                        <li>
+                            <img class="img-circle" src="{% static 'images/default_head_img.gif' %}" style="width: 45%;">
+                        </li>
+                        <li>
+                            <b style="font-size: 3px;color:#ff6700;margin: auto;">退出账号</b>
+                        </li>
+                    </ul>
+            </a>
+            {% else %}
+        		<a href="{% url 'users:login' %}">
+        			<ul>
+        				<li>
+        					<img class="img-circle" src="{% static 'images/default_head_img.gif' %}" style="width: 45%;">
+        				</li>
+        				<li>
+        					<b style="font-size: 3px;color:#ff6700;margin: auto;">登录|注册</b>
+        				</li>
+        			</ul>
+        		</a>
+             {% endif %}
+             {% endblock %}
+    	</div>
+
+    </div>
+    </div>
+    <!-- 顶部结束 -->

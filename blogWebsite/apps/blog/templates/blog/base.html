@@ -1,0 +1,234 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>{% block title %}博客{% endblock %}</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="{% static '/css/index_style.css' %}" rel="stylesheet">
+{% block css %}
+{% endblock %}
+<script type="text/javascript" src="{% static 'jquery-3.2.1.min.js' %}">
+</script>
+<script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+</head>
+<body>
+    <div class="header">
+    	<!-- 顶部 -->
+    <div class="top">
+    	<!-- 左边部分 -->
+    	<div class="top-left">
+    		<!-- logo部分 -->
+    		<div class="logo">
+    			<a href="/index">
+    				<img src="{% static 'images/logo3.gif' %}">
+    			</a>
+    		</div>
+    		<!-- 滚动消息 -->
+    		<div class="web-xiaoxi">
+    			<i class="el-speaker">
+    			</i>
+    			<ul class="mulitline">
+    				test
+    			</ul>
+    		</div>
+    	</div>
+    	<!-- 右边部分 -->
+    	<div class="top-right">
+    		<ul class="orange-text">
+    			<li>
+    				<a href="{% url 'blog:blog_index' %}" class="active">首页</a>
+    			</li>
+    			<li>
+    				<a href="/">分类</a>
+    			</li>
+    		</ul>
+             <form class="top-right-form" action="{% url 'blog:blog_search' %}">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search" name="keyword">
+                  <button type="submit" class="btn btn-default">搜索</button>
+                </div>
+             </form>
+    	</div>
+
+    	<!-- 头像 -->
+    	<div class="vip">
+            {% block LoginHead %}
+            {% if request.user.is_authenticated %}  <!-- 如果登录成功 -->
+            <a onclick="btnLoginAndRegisterClicked()">
+                    <ul>
+                        <li>
+                            <img class="img-circle" src="{% static 'images/default_head_img.gif' %}" style="width: 45%;">
+                        </li>
+                        <li>
+                            <b style="font-size: 3px;color:#ff6700;margin: auto;">退出账号</b>
+                        </li>
+                    </ul>
+            </a>
+            {% else %}
+        		<a onclick="btnLoginAndRegisterClicked()">
+        			<ul>
+        				<li>
+        					<img class="img-circle" src="{% static 'images/default_head_img.gif' %}" style="width: 45%;">
+        				</li>
+        				<li>
+        					<b style="font-size: 3px;color:#ff6700;margin: auto;">登录|注册</b>
+        				</li>
+        			</ul>
+        		</a>
+             {% endif %}
+             {% endblock %}
+    	</div>
+
+    </div>
+    </div>
+    <!-- 顶部结束 -->
+
+    {% block container %}
+    <div class="container">
+    	 <!-- 左边竖栏 -->
+   	 <div class="container-leftcolumn">
+    
+        {% include 'blog/left_side_bar.html' %}
+    	<!-- 最新文章 -->
+<!-- 		<div class="asideArchive">
+			<h3 class="aside-title">最新文章</h3>
+			<div class="aside-content">
+				<ul class="lately-article">
+					<a href=""><li>文章记录一</li></a>
+					<a href=""><li>文章记录一</li></a>
+				</ul>
+			</div>
+		</div> -->
+
+		<!-- 归档 -->
+<!-- 		<div class="asideArchive">
+			<h3 class="aside-title">归档</h3>
+			<div class="aside-content">
+				<ul class="archive-list">
+					<li>
+						<a href="">2019年12月17日
+							<span class="count-float-right">1篇</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<p class="text-center">
+				<a href="">展开</a>
+			</p>
+		</div> -->
+
+    </div> <!-- 左边竖栏结束 -->
+
+
+    {% block container-middlecolumn %}
+<!--     <div class="container-middlecolumn">
+        <div class="container-middlecolumn-Tab">
+        </div>
+        <div class="article-list">
+            <div class="article-itembox">
+                <h4 class="article-title"><a class="article-link" href="" target="_blank">我的第一篇文章</a></h4>
+                <p class="content"><a class="article-link" href="" target="_blank">而我惹我让位而我惹我惹我惹额温柔温柔问问二问而我惹我让位人而我认为人为认为人问werewolf瑞文瑞文瑞瑞瑞瑞瑞 问问</a>
+                </p>
+                <div class="info-box">
+                    <p><span class="date">2019-12-25</span></p>
+                    <p class="point"></p>
+                    <p><span class="read-Item">阅读数<span class="readNum">0</span></span></p>
+                    <p class="point"></p>
+                    <p><span class="pinglun-Item">评论数<span class="pinglunNum">0</span></span></p>
+                </div>
+                <div class="opt-box">
+                    <button class="opt-btnTop" data-type="top" style="border-right:0.5px solid #aaa">置顶</button>
+                    <a class="opt-editorLink" data-type="endtor" href="">编辑</a>
+                    <button class="opt-delete" data-type="delete" style="border-left:0.5px solid #aaa">删除</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <!-- 中间竖栏结束 -->
+     {% endblock %}
+
+    
+     <div class="container-rightcolumn">
+         {% block rightcolumn-toc %}
+    <!--      <div class="rightcolumn-toc">
+            <h3>目录</h3>
+             {{ entry.toc|safe }}
+         </div> -->
+          {% endblock %}
+        <div id="back-to-top">
+            <i class="glyphicon glyphicon-arrow-up">顶部</i>
+         </div>
+
+     </div><!-- 右边竖栏结束 -->
+        
+
+    </div>
+    {% endblock %}
+  
+     {% if request.user.is_authenticated %}  <!-- 如果登录成功 -->
+
+    {% else %}
+    <!-- 登录注册 -->
+    <div class="hidenBox" style="display:block;"></div>
+    <div class="topLogin-Box">
+        <a class="topLogin-Box-close" href="javascript:void(0)" onclick="btnCloseLoginBox()" title="关闭">
+            <img src="{% static 'images/close.jpg' %}">
+        </a>
+        <img class="topLogin-Box-logo" src="{% static 'images/logo3.gif' %}">
+        <div class="topLogin-Area">
+            <div class="login-body">
+                <div class="loginwin-tab">
+                    <ul class="loginwin-tab-list">
+                        <li class="normal-login-tab"><span>普通登录</span></li>
+                        <li class="qrcode-login-tab"><span>扫码登录</span></li>
+                    </ul>
+                </div> <!--tab结束-->
+
+                <!-- 登录区域 -->
+                <div class="loginwinArea">
+                    <form class="loginwin-login-form" id="top-LoginForm" name="topLoginForm" method="post">
+                        <div class="loginwin-form-item loginwin-account-input">
+                            <label for="username">用户名</label>
+                            <input type="text" class="input-text" name="username" placeholder="用户名/邮箱" autocomplete="off">
+                        </div>
+                        <div class="loginwin-form-item loginwin-password-input">
+                            <label for="password">密&nbsp;&nbsp;&nbsp;码</label>
+                            <input type="password" class="input-text" name="password" placeholder="密码" autocomplete="off">
+                        </div>
+                        <div class="loginwin-form-item cf">
+                            <label class="f1">
+                                <input type="checkbox" class="input-checkbox" id="rmflag" name="rmflag" value="1" checked="checked">
+                                记住密码
+                            </label>
+                            <a class="loginwin-password-link forgedPwd" href="/index.html">忘记密码?</a>
+                        </div>
+                        <div class="loginwin-form-item item-btnlogin">
+                            <button type="submit" class="loginwin-btnlogin">登录</button>
+                        </div>
+                        <div class="loginwin-form-item">
+                            <a href="">立即注册></a>
+                        </div>
+                    </form>
+                </div><!-- 登录区域结束 -->
+
+                <div class="loginwinThird">
+                    <p class="loginwinThird-title">
+                        <span>使用第三方账号登录</span>
+                    </p>
+                    <ul class="loginwin-third-list">
+                        <li><a class="wxLogin" href="" title="微信账号登录"></a></li>
+                        <li><a class="qqLogin" href="" title="QQ账号登录"></a></li>
+                        <li><a class="wbLogin" href="" title="新浪微博账号登录"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 登录注册结束 -->
+    {% endif %}
+    
+</body>
+</html>

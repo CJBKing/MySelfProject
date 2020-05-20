@@ -1,0 +1,100 @@
+{% extends 'blog/base.html' %}
+{% block title %}博客首页{% endblock %}
+
+{% block container-middlecolumn %}
+    <div class="container-middlecolumn">
+        {% if entry_list%}
+        <ul class="container-middlecolumn-Tab">
+            <li class="tab-feed"><a href="/latest/feed/">RSS订阅</a></li>
+        </ul>
+        {% endif %}
+        <div class="article-list">
+            {% for entry in entry_list %}
+            <div class="article-itembox">
+                <h4 class="article-title"><a class="article-link" href="{{ entry.get_absolute_url }}">{{ entry.title }}</a></h4>
+                {% if entry.img %}
+                <p><img src="{{ entry.img.url }}" width="60%" height="90%"></p>
+                {% endif %}
+                <p class="content"><a class="article-link" href="{{ entry.get_absolute_url }}">{{ entry.abstract }}</a>
+                </p>
+                <div class="info-box">
+                    <p><span class="date">{{ entry.created_time }}</span></p>
+                    <p class="point"></p>
+                    <p><span class="read-Item">阅读数<span class="readNum">{{ entry.visiting }}</span></span></p>
+                    <p class="point"></p>
+                    <p><span class="pinglun-Item">评论数<span class="pinglunNum">0</span></span></p>
+                </div>
+                <div class="opt-box">
+                    <button class="opt-btnTop" data-type="top" style="border-right:0.5px solid #aaa">置顶</button>
+                    <a class="opt-editorLink" data-type="endtor" href="">编辑</a>
+                    <button class="opt-delete" data-type="delete" style="border-left:0.5px solid #aaa">删除</button>
+                </div>
+            </div>
+            {% endfor %}
+            {% if entry_list%}
+            <div class="pagination-box">
+                <ul class="pagination">
+                        {% if entry_list.has_previous %}
+                            <li><a href="?page={{ entry_list.previous_page_number }}"><i
+                                    class="glyphicon glyphicon-chevron-left"></i>前一页</a></li>
+                        {% endif %}
+
+                        {% if first %}
+                            <li><a href="?page=1">1</a></li>
+                        {% endif %}
+
+                        {% if left %}
+                            {% if left_has_more %}
+                                <span>...</span>
+                            {% endif %}
+
+                            {% for i in left %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+                        {% endif %}
+
+                        <li class="active"><a href="?page={{ entry_list.number }}">{{ entry_list.number }}</a></li>
+
+                        {% if right %}
+                            {% for i in right %}
+                                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+
+                            {% if right_has_more %}
+                                <span>...</span>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if last %}
+                            <li><a href="?page={{ entry_list.num_pages }}">{{ entry_list.num_pages }}</a></li>
+                        {% endif %}
+
+                        {% if entry_list.has_next %}
+                            <li><a href="?page={{ entry_list.next_page_number }}">下一页<i
+                                    class="glyphicon glyphicon-chevron-right"></i></a></li>
+                        {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <!-- 中间竖栏结束 -->
+{% endblock %}
+
+
+{% block category %}
+        <div class="aside-content">
+            <ul class="archive-list">
+                {% for categoryItem in categories %}
+                <li>
+                    <a href="{% url 'blog:blog_category' categoryItem.id %}">{{ categoryItem.name }}
+                        <span class="count-float-right">{{ categoryItem.id }}篇</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <p class="text-center">
+            <a href="">展开</a>
+        </p>
+{% endblock %}

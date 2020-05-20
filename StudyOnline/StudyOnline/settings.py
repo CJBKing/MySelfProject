@@ -46,8 +46,12 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
+    'captcha',
 ]
 
+# AUTHENTICATION_BACKENDS=(
+#     'users.views.CustomBackend',
+# )
 AUTH_USER_MODEL='users.UserProfile'
 
 MIDDLEWARE = [
@@ -79,6 +83,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'StudyOnline.wsgi.application'
+
+
+#email config
+EMAIL_HOST="smtp.qq.com"   #SMTP服务器主机
+EMAIL_PORT=25              #端口
+EMAIL_HOST_USER="836419099@qq.com" #邮箱地址
+EMAIL_HOST_PASSWORD="kmtnquytedpwbffe"         #开启邮箱SMTP服务，生成的授权码
+EMAIL_USE_TLS=True
+EMAIL_FROM="836419099@qq.com"    #邮箱地址
+
 
 
 # Database
@@ -138,3 +152,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS=(
     os.path.join(BASE_DIR,'static'),
     )
+
+#设置上传文件的路径
+MEDIA_URL="/media/"
+MEDIA_ROOT=os.path.join(BASE_DIR,"media")       #指定根目录

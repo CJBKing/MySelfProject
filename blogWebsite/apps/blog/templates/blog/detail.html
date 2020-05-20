@@ -1,0 +1,75 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+{% block title %}博客详情页{% endblock %}
+
+{% block css %}
+ <link rel="stylesheet" href="{% static '/css/github.css' %}">
+ <link rel="stylesheet" href="{% static '/css/detail.css' %}">
+{% endblock %}
+
+{% block container-middlecolumn %}
+
+<div class="container-middlecolumn">
+	<div class="blog-content-box">
+		<div class="article-header-box">
+			<div class="article-title-box">
+				<h1 class="title-article">{{ entry.title }}</h1>
+			</div>
+			<div class="article-info-box">
+				<div class="article-bar-top">
+					<span class="article-type">原创{{ entry.get_articleType }}</span>
+					<a class="follow-nickname" href="">{{ entry.author.username }}</a>
+					<span class="create_time">发布于{{ entry.created_time }}</span>
+					<span class="read-count">阅读数 {{ entry.visiting }}</span>
+				</div>
+			</div>
+			<div class="slide-content-box">
+				<div class="article-catgory">
+					<span class="label">文章分类:</span>
+					{% for category in entry.category.all %}
+					<a class="article-catgory-link" href="{% url 'blog:blog_category' category.id %}">{{ category.name }}</a>
+					{% endfor %}
+				</div>
+				<div class="article-Tag">
+					{% for tag in entry.tags.all %}
+					<span class="label">文章标签:</span>
+					<a href="{% url 'blog:blog_tag' tag.id %}">{{ tag.name }}</a>
+					{% endfor %}
+				</div>
+				<div class="article-copyright">
+					<span>版权声明：本文为博主原创文章，遵循
+					<a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>
+					版权协议，转载请附上原文出处链接和本声明。
+					</span>
+					<div class="article-source-link2222">
+                                本文链接：<a href="{{ entry.get_absolute_url }}">{{ entry.get_absolute_url }}</a>
+                            </div>
+				</div>
+			</div>
+		</div>
+		<!-- 内容顶部结束 -->
+
+		<article class="articleArea">
+			<div class="article-content">
+				<p>
+					{{ entry.toc|safe }}
+					{{ entry.body|safe }}
+					<!-- {{ entry.body }} -->
+				</p>
+				
+			</div>
+		</article>
+
+	</div>
+</div>
+
+{% endblock %}
+
+   {% block rightcolumn-toc %}
+	   	{% if entry.toc|safe %}
+	         <div class="rightcolumn-toc">
+	            <h3>目录</h3>
+	             {{ entry.toc|safe }}
+	         </div>
+	    {% endif %}
+  {% endblock %}
